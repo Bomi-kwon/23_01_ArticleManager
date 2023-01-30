@@ -1,5 +1,6 @@
 package com.KoreaIT.java.AM;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -45,21 +46,43 @@ public class Main {
 				articles.add(article);
 				System.out.printf("%d번글이 생성되었습니다.\n",id);
 			}
+			else if(cmd.startsWith("article detail ")) {
+				String[] cmdBits = cmd.split(" ");
+				int searchId = Integer.parseInt(cmdBits[2]);
+				
+				boolean found = false;
+				
+				for (int i = 0 ; i < articles.size() ; i++) {
+					Article article = articles.get(i);
+					if(article.id == searchId) {
+						found = true;
+						System.out.printf("번호 : %d\n날짜 : %s\n제목 : %s\n내용 : %s\n", article.id, LocalDateTime.now(), article.title, article.body);
+						break;
+					}
+				}
+				if (found == false) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다.\n",searchId);
+					continue;
+				}
+				
+				
+				
+			}
 			else {
 				System.out.println("존재하지 않는 명령어입니다.");
 			}
 		}
-		
-		sc.close();
-		
-		System.out.println("== 프로그램 끝 ==");
-	}
-}
+
+	sc.close();
+
+	System.out.println("== 프로그램 끝 ==");
+}}
+
 class Article {
 	int id;
 	String title;
 	String body;
-	
+
 	public Article(int id, String title, String body) {
 		this.id = id;
 		this.title = title;
